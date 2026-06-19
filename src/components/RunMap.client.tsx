@@ -25,7 +25,6 @@ export default function RunMap({ center, paths, activePathId }: Props) {
     Promise.all([
       import("react-leaflet"),
       import("leaflet"),
-      // @ts-expect-error css side-effect import
       import("leaflet/dist/leaflet.css"),
     ]).then(([rl, leaflet]) => {
       if (!active) return;
