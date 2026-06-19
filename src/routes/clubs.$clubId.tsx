@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
-import { getClub, getRunsForClub } from "@/lib/mock-data";
+import { getClub, getRunsForClub, type Club, type Run } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/clubs/$clubId")({
   loader: ({ params }) => {
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/clubs/$clubId")({
 });
 
 function ClubPage() {
-  const { club, runs } = Route.useLoaderData();
+  const { club, runs } = Route.useLoaderData() as { club: Club; runs: Run[] };
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
