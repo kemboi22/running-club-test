@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
-import RunMap from "@/components/RunMap.client";
+import RunMap from "@/components/RunMap";
 import {
   getRun,
   getClub,
