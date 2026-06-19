@@ -32,12 +32,20 @@ export function SiteHeader() {
             All Runs
           </Link>
         </nav>
-        <button
-          className="rounded-xl px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md transition hover:opacity-90"
-          style={{ background: "var(--gradient-hero)" }}
-        >
-          + New Club
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/login"
+            className="hidden rounded-xl px-3 py-2 text-sm font-semibold text-foreground hover:bg-muted sm:inline-block"
+          >
+            Log in
+          </Link>
+          <Link
+            to="/signup"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md transition hover:opacity-90"
+          >
+            Sign up
+          </Link>
+        </div>
       </div>
     </header>
   );
