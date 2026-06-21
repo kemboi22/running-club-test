@@ -28,7 +28,7 @@ export type LeaderboardEntry = {
   pathId: string;
   timeSeconds: number;
   paceMinKm: string;
-  isMVP?: boolean;
+  votes?: number;
 };
 
 export type Run = {
@@ -53,7 +53,7 @@ export type Club = {
   city: string;
   description: string;
   emoji: string;
-  color: string;
+  accent: string; // hex used for solid color blocks
   members: Member[];
   runIds: string[];
 };
