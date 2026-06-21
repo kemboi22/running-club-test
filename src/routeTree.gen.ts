@@ -9,69 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RunsRunIdRouteImport } from './routes/runs.$runId'
-import { Route as ClubsClubIdRouteImport } from './routes/clubs.$clubId'
 
-const RunsRunIdRoute = RunsRunIdRouteImport.update({
-  id: '/runs/$runId',
-  path: '/runs/$runId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClubsClubIdRoute = ClubsClubIdRouteImport.update({
-  id: '/clubs/$clubId',
-  path: '/clubs/$clubId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
-export interface FileRoutesByFullPath {
-  '/clubs/$clubId': typeof ClubsClubIdRoute
-  '/runs/$runId': typeof RunsRunIdRoute
-}
-export interface FileRoutesByTo {
-  '/clubs/$clubId': typeof ClubsClubIdRoute
-  '/runs/$runId': typeof RunsRunIdRoute
-}
+export interface FileRoutesByFullPath {}
+export interface FileRoutesByTo {}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/clubs/$clubId': typeof ClubsClubIdRoute
-  '/runs/$runId': typeof RunsRunIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/clubs/$clubId' | '/runs/$runId'
+  fullPaths: never
   fileRoutesByTo: FileRoutesByTo
-  to: '/clubs/$clubId' | '/runs/$runId'
-  id: '__root__' | '/clubs/$clubId' | '/runs/$runId'
+  to: never
+  id: '__root__'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {
-  ClubsClubIdRoute: typeof ClubsClubIdRoute
-  RunsRunIdRoute: typeof RunsRunIdRoute
-}
+export interface RootRouteChildren {}
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/runs/$runId': {
-      id: '/runs/$runId'
-      path: '/runs/$runId'
-      fullPath: '/runs/$runId'
-      preLoaderRoute: typeof RunsRunIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clubs/$clubId': {
-      id: '/clubs/$clubId'
-      path: '/clubs/$clubId'
-      fullPath: '/clubs/$clubId'
-      preLoaderRoute: typeof ClubsClubIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-  }
+  interface FileRoutesByPath {}
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  ClubsClubIdRoute: ClubsClubIdRoute,
-  RunsRunIdRoute: RunsRunIdRoute,
-}
+const rootRouteChildren: RootRouteChildren = {}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
