@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as RunsRouteImport } from './routes/runs'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ClubsRouteImport } from './routes/clubs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RunsIndexRouteImport } from './routes/runs.index'
 import { Route as ClubsIndexRouteImport } from './routes/clubs.index'
@@ -23,9 +25,19 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RunsRoute = RunsRouteImport.update({
+  id: '/runs',
+  path: '/runs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubsRoute = ClubsRouteImport.update({
+  id: '/clubs',
+  path: '/clubs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -34,34 +46,36 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const RunsIndexRoute = RunsIndexRouteImport.update({
-  id: '/runs/',
-  path: '/runs/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => RunsRoute,
 } as any)
 const ClubsIndexRoute = ClubsIndexRouteImport.update({
-  id: '/clubs/',
-  path: '/clubs/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => ClubsRoute,
 } as any)
 const RunsRunIdRoute = RunsRunIdRouteImport.update({
-  id: '/runs/$runId',
-  path: '/runs/$runId',
-  getParentRoute: () => rootRouteImport,
+  id: '/$runId',
+  path: '/$runId',
+  getParentRoute: () => RunsRoute,
 } as any)
 const ClubsNewRoute = ClubsNewRouteImport.update({
-  id: '/clubs/new',
-  path: '/clubs/new',
-  getParentRoute: () => rootRouteImport,
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => ClubsRoute,
 } as any)
 const ClubsClubIdRoute = ClubsClubIdRouteImport.update({
-  id: '/clubs/$clubId',
-  path: '/clubs/$clubId',
-  getParentRoute: () => rootRouteImport,
+  id: '/$clubId',
+  path: '/$clubId',
+  getParentRoute: () => ClubsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clubs': typeof ClubsRouteWithChildren
   '/login': typeof LoginRoute
+  '/runs': typeof RunsRouteWithChildren
   '/signup': typeof SignupRoute
   '/clubs/$clubId': typeof ClubsClubIdRoute
   '/clubs/new': typeof ClubsNewRoute
@@ -82,7 +96,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clubs': typeof ClubsRouteWithChildren
   '/login': typeof LoginRoute
+  '/runs': typeof RunsRouteWithChildren
   '/signup': typeof SignupRoute
   '/clubs/$clubId': typeof ClubsClubIdRoute
   '/clubs/new': typeof ClubsNewRoute
@@ -94,7 +110,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/clubs'
     | '/login'
+    | '/runs'
     | '/signup'
     | '/clubs/$clubId'
     | '/clubs/new'
@@ -114,7 +132,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/clubs'
     | '/login'
+    | '/runs'
     | '/signup'
     | '/clubs/$clubId'
     | '/clubs/new'
@@ -125,13 +145,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClubsRoute: typeof ClubsRouteWithChildren
   LoginRoute: typeof LoginRoute
+  RunsRoute: typeof RunsRouteWithChildren
   SignupRoute: typeof SignupRoute
-  ClubsClubIdRoute: typeof ClubsClubIdRoute
-  ClubsNewRoute: typeof ClubsNewRoute
-  RunsRunIdRoute: typeof RunsRunIdRoute
-  ClubsIndexRoute: typeof ClubsIndexRoute
-  RunsIndexRoute: typeof RunsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -143,11 +160,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/runs': {
+      id: '/runs'
+      path: '/runs'
+      fullPath: '/runs'
+      preLoaderRoute: typeof RunsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clubs': {
+      id: '/clubs'
+      path: '/clubs'
+      fullPath: '/clubs'
+      preLoaderRoute: typeof ClubsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -159,51 +190,74 @@ declare module '@tanstack/react-router' {
     }
     '/runs/': {
       id: '/runs/'
-      path: '/runs'
+      path: '/'
       fullPath: '/runs/'
       preLoaderRoute: typeof RunsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof RunsRoute
     }
     '/clubs/': {
       id: '/clubs/'
-      path: '/clubs'
+      path: '/'
       fullPath: '/clubs/'
       preLoaderRoute: typeof ClubsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ClubsRoute
     }
     '/runs/$runId': {
       id: '/runs/$runId'
-      path: '/runs/$runId'
+      path: '/$runId'
       fullPath: '/runs/$runId'
       preLoaderRoute: typeof RunsRunIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof RunsRoute
     }
     '/clubs/new': {
       id: '/clubs/new'
-      path: '/clubs/new'
+      path: '/new'
       fullPath: '/clubs/new'
       preLoaderRoute: typeof ClubsNewRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ClubsRoute
     }
     '/clubs/$clubId': {
       id: '/clubs/$clubId'
-      path: '/clubs/$clubId'
+      path: '/$clubId'
       fullPath: '/clubs/$clubId'
       preLoaderRoute: typeof ClubsClubIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ClubsRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
-  SignupRoute: SignupRoute,
+interface ClubsRouteChildren {
+  ClubsClubIdRoute: typeof ClubsClubIdRoute
+  ClubsNewRoute: typeof ClubsNewRoute
+  ClubsIndexRoute: typeof ClubsIndexRoute
+}
+
+const ClubsRouteChildren: ClubsRouteChildren = {
   ClubsClubIdRoute: ClubsClubIdRoute,
   ClubsNewRoute: ClubsNewRoute,
-  RunsRunIdRoute: RunsRunIdRoute,
   ClubsIndexRoute: ClubsIndexRoute,
+}
+
+const ClubsRouteWithChildren = ClubsRoute._addFileChildren(ClubsRouteChildren)
+
+interface RunsRouteChildren {
+  RunsRunIdRoute: typeof RunsRunIdRoute
+  RunsIndexRoute: typeof RunsIndexRoute
+}
+
+const RunsRouteChildren: RunsRouteChildren = {
+  RunsRunIdRoute: RunsRunIdRoute,
   RunsIndexRoute: RunsIndexRoute,
+}
+
+const RunsRouteWithChildren = RunsRoute._addFileChildren(RunsRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  ClubsRoute: ClubsRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RunsRoute: RunsRouteWithChildren,
+  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
