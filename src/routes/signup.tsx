@@ -24,17 +24,22 @@ function SignupPage() {
 
   return (
     <div className="grid min-h-screen md:grid-cols-2">
-      {/* Right-side solid brand panel (using secondary so signup feels distinct from login) */}
-      <aside className="hidden bg-secondary p-12 text-secondary-foreground md:order-2 md:flex md:flex-col md:justify-between">
-        <Link to="/" className="flex items-center gap-2 text-lg font-bold">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-secondary-foreground/10 text-xl">🏃</span>
-          PacePack
+      <aside
+        className="hidden flex-col justify-between p-12 text-accent-foreground md:order-2 md:flex"
+        style={{ backgroundColor: "var(--accent)" }}
+      >
+        <Link to="/" className="flex items-center gap-2.5">
+          <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent-foreground/15 text-xl">
+            🏃
+          </span>
+          <span className="font-display text-2xl tracking-wide">PACEPACK</span>
         </Link>
         <div>
-          <h2 className="text-4xl font-black leading-tight">
-            Join the <br /> pack.
+          <h2 className="font-display text-6xl leading-[0.95]">
+            Join the
+            <br /> pack.
           </h2>
-          <p className="mt-4 max-w-sm text-secondary-foreground/85">
+          <p className="mt-4 max-w-sm opacity-90">
             Create your account in seconds, then start a club or join one.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-3 text-sm">
@@ -44,15 +49,18 @@ function SignupPage() {
             <Tile label="MVPs crowned" value="2.1k" />
           </div>
         </div>
-        <p className="text-xs text-secondary-foreground/70">© PacePack</p>
+        <p className="text-xs opacity-70">© PacePack</p>
       </aside>
 
       <main className="flex items-center justify-center bg-background p-6 sm:p-12 md:order-1">
         <div className="w-full max-w-md">
-          <Link to="/" className="text-sm font-semibold text-muted-foreground hover:text-foreground md:hidden">
+          <Link
+            to="/"
+            className="text-sm font-semibold text-muted-foreground hover:text-foreground md:hidden"
+          >
             ← Home
           </Link>
-          <h1 className="mt-2 text-3xl font-black">Create your account</h1>
+          <h1 className="font-display mt-2 text-5xl">Create account</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Already a member?{" "}
             <Link to="/login" className="font-semibold text-primary hover:underline">
@@ -80,17 +88,19 @@ function SignupPage() {
             />
 
             <div>
-              <span className="mb-1.5 block text-sm font-semibold text-foreground">I'm joining as</span>
+              <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-foreground">
+                I'm joining as
+              </span>
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { id: "runner", label: "🏃 Runner" },
-                  { id: "organizer", label: "📣 Club organizer" },
+                  { id: "organizer", label: "📣 Organizer" },
                 ].map((opt) => (
                   <button
                     key={opt.id}
                     type="button"
                     onClick={() => set("role")(opt.id)}
-                    className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition ${
+                    className={`rounded-xl border-2 px-4 py-3 text-sm font-bold transition ${
                       form.role === opt.id
                         ? "border-primary bg-primary/10 text-primary"
                         : "border-border bg-card text-foreground hover:border-primary/40"
@@ -104,11 +114,10 @@ function SignupPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition hover:opacity-90"
+              className="w-full rounded-xl bg-primary py-3 text-sm font-bold uppercase tracking-wider text-primary-foreground transition hover:brightness-110"
             >
               Create account
             </button>
-
             <p className="text-center text-xs text-muted-foreground">
               By signing up you agree to our Terms and Privacy Policy.
             </p>
@@ -121,9 +130,9 @@ function SignupPage() {
 
 function Tile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-secondary-foreground/10 p-4">
-      <p className="text-2xl font-black">{value}</p>
-      <p className="text-xs font-semibold text-secondary-foreground/80">{label}</p>
+    <div className="rounded-xl bg-accent-foreground/15 p-4">
+      <p className="font-display text-3xl">{value}</p>
+      <p className="text-xs font-semibold opacity-80">{label}</p>
     </div>
   );
 }
@@ -145,14 +154,16 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-semibold text-foreground">{label}</span>
+      <span className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-foreground">
+        {label}
+      </span>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="w-full rounded-xl border-2 border-border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none"
+        className="w-full rounded-xl border-2 border-border bg-card px-4 py-3 text-sm placeholder:text-muted-foreground/70 focus:border-primary focus:outline-none"
       />
     </label>
   );
