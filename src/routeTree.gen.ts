@@ -9,27 +9,218 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as RunsRouteImport } from './routes/runs'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ClubsRouteImport } from './routes/clubs'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as RunsRunIdRouteImport } from './routes/runs.$runId'
+import { Route as ClubsNewRouteImport } from './routes/clubs.new'
+import { Route as ClubsClubIdRouteImport } from './routes/clubs.$clubId'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RunsRoute = RunsRouteImport.update({
+  id: '/runs',
+  path: '/runs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubsRoute = ClubsRouteImport.update({
+  id: '/clubs',
+  path: '/clubs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RunsRunIdRoute = RunsRunIdRouteImport.update({
+  id: '/$runId',
+  path: '/$runId',
+  getParentRoute: () => RunsRoute,
+} as any)
+const ClubsNewRoute = ClubsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => ClubsRoute,
+} as any)
+const ClubsClubIdRoute = ClubsClubIdRouteImport.update({
+  id: '/$clubId',
+  path: '/$clubId',
+  getParentRoute: () => ClubsRoute,
+} as any)
+
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/clubs': typeof ClubsRouteWithChildren
+  '/login': typeof LoginRoute
+  '/runs': typeof RunsRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/clubs/$clubId': typeof ClubsClubIdRoute
+  '/clubs/new': typeof ClubsNewRoute
+  '/runs/$runId': typeof RunsRunIdRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/clubs': typeof ClubsRouteWithChildren
+  '/login': typeof LoginRoute
+  '/runs': typeof RunsRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/clubs/$clubId': typeof ClubsClubIdRoute
+  '/clubs/new': typeof ClubsNewRoute
+  '/runs/$runId': typeof RunsRunIdRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/clubs': typeof ClubsRouteWithChildren
+  '/login': typeof LoginRoute
+  '/runs': typeof RunsRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/clubs/$clubId': typeof ClubsClubIdRoute
+  '/clubs/new': typeof ClubsNewRoute
+  '/runs/$runId': typeof RunsRunIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths:
+    | '/'
+    | '/clubs'
+    | '/login'
+    | '/runs'
+    | '/signup'
+    | '/clubs/$clubId'
+    | '/clubs/new'
+    | '/runs/$runId'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to:
+    | '/'
+    | '/clubs'
+    | '/login'
+    | '/runs'
+    | '/signup'
+    | '/clubs/$clubId'
+    | '/clubs/new'
+    | '/runs/$runId'
+  id:
+    | '__root__'
+    | '/'
+    | '/clubs'
+    | '/login'
+    | '/runs'
+    | '/signup'
+    | '/clubs/$clubId'
+    | '/clubs/new'
+    | '/runs/$runId'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  ClubsRoute: typeof ClubsRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RunsRoute: typeof RunsRouteWithChildren
+  SignupRoute: typeof SignupRoute
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/runs': {
+      id: '/runs'
+      path: '/runs'
+      fullPath: '/runs'
+      preLoaderRoute: typeof RunsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clubs': {
+      id: '/clubs'
+      path: '/clubs'
+      fullPath: '/clubs'
+      preLoaderRoute: typeof ClubsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/runs/$runId': {
+      id: '/runs/$runId'
+      path: '/$runId'
+      fullPath: '/runs/$runId'
+      preLoaderRoute: typeof RunsRunIdRouteImport
+      parentRoute: typeof RunsRoute
+    }
+    '/clubs/new': {
+      id: '/clubs/new'
+      path: '/new'
+      fullPath: '/clubs/new'
+      preLoaderRoute: typeof ClubsNewRouteImport
+      parentRoute: typeof ClubsRoute
+    }
+    '/clubs/$clubId': {
+      id: '/clubs/$clubId'
+      path: '/$clubId'
+      fullPath: '/clubs/$clubId'
+      preLoaderRoute: typeof ClubsClubIdRouteImport
+      parentRoute: typeof ClubsRoute
+    }
+  }
+}
+
+interface ClubsRouteChildren {
+  ClubsClubIdRoute: typeof ClubsClubIdRoute
+  ClubsNewRoute: typeof ClubsNewRoute
+}
+
+const ClubsRouteChildren: ClubsRouteChildren = {
+  ClubsClubIdRoute: ClubsClubIdRoute,
+  ClubsNewRoute: ClubsNewRoute,
+}
+
+const ClubsRouteWithChildren = ClubsRoute._addFileChildren(ClubsRouteChildren)
+
+interface RunsRouteChildren {
+  RunsRunIdRoute: typeof RunsRunIdRoute
+}
+
+const RunsRouteChildren: RunsRouteChildren = {
+  RunsRunIdRoute: RunsRunIdRoute,
+}
+
+const RunsRouteWithChildren = RunsRoute._addFileChildren(RunsRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  ClubsRoute: ClubsRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RunsRoute: RunsRouteWithChildren,
+  SignupRoute: SignupRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
