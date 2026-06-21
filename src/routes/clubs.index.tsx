@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { clubs, useStore } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/clubs")({
+export const Route = createFileRoute("/clubs/")({
   head: () => ({
     meta: [
       { title: "Clubs — PacePack" },

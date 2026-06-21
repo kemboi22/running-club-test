@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { runs, getClub, useStore } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/runs")({
+export const Route = createFileRoute("/runs/")({
   head: () => ({
     meta: [
       { title: "All runs — PacePack" },
