@@ -1,11 +1,8 @@
-FROM oven/bun:1 AS build
+FROM oven/bun:1-slim
 WORKDIR /app
 COPY package.json bun.lock bunfig.toml ./
 RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run build
-
-FROM nginx:alpine
-COPY --from=build /app/dist/client /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 4173
+CMD ["bun", "run", "preview"]
